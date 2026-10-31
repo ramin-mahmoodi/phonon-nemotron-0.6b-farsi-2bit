@@ -1,5 +1,5 @@
 """
-Phonon 2.5 Inference Script
+Nemotron 0.6B Farsi 2-Bit Inference Script
 Command-line inference for Persian speech recognition
 Usage:
     python infer.py --audio speech.wav [--device cuda:0]
@@ -9,7 +9,7 @@ import argparse
 import torch
 import torchaudio
 import torchaudio.functional as taf
-from engine import load_phonon_model
+from engine import load_model
 
 
 def transcribe(audio_path: str, model, processor, device: str = "cuda:0") -> str:
@@ -29,7 +29,7 @@ def transcribe(audio_path: str, model, processor, device: str = "cuda:0") -> str
         if torch.is_tensor(v)
     }
 
-    # 3. Streamed Generation
+    # 3. Model Generation
     with torch.no_grad():
         with torch.amp.autocast("cuda", dtype=torch.float16) if "cuda" in device else torch.no_grad():
             out = model.generate(**inputs_dev, return_dict_in_generate=True)
@@ -38,7 +38,7 @@ def transcribe(audio_path: str, model, processor, device: str = "cuda:0") -> str
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Transcribe Persian audio using Phonon 2.5 (Sub-200MB 2-bit)")
+    parser = argparse.ArgumentParser(description="Transcribe Persian audio using Nemotron 0.6B Farsi 2-Bit (Sub-200MB)")
     parser.add_argument("--audio", type=str, required=True, help="Path to input audio file (.wav, .mp3, .flac)")
     parser.add_argument("--container", type=str, default=None, help="Path to local .bps.tar.zst container (optional)")
     parser.add_argument(
@@ -55,7 +55,7 @@ def main():
     )
     args = parser.parse_args()
 
-    model, processor = load_phonon_model(container_path=args.container, repo_id=args.repo_id, device=args.device)
+    model, processor = load_model(container_path=args.container, repo_id=args.repo_id, device=args.device)
 
     print(f"\n🎙️ Transcribing: {args.audio}")
     transcription = transcribe(args.audio, model, processor, device=args.device)

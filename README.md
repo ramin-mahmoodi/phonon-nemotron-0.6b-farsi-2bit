@@ -1,4 +1,4 @@
-# 🚀 Phonon 2.5: Nemotron FastConformer 0.6B Farsi (Sub-200MB 2-Bit)
+# 🚀 Nemotron 0.6B Farsi 2-Bit (Sub-200MB Speech-to-Text)
 
 [![Hugging Face Model](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Model%20Card-yellow)](https://huggingface.co/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
@@ -7,7 +7,7 @@
 [![Compression](https://img.shields.io/badge/Compression->12x%20Reduction-orange.svg)]()
 [![Language](https://img.shields.io/badge/Language-Persian%20%28Farsi%29-blue.svg)]()
 
-Official repository for **Phonon 2.5 Nemotron 0.6B Farsi**: an industrial-grade, extreme 2-bit quantized streaming Automatic Speech Recognition (ASR) model for the Persian language, compressed from **2,400 MB down to 198.96 MB** with **zero blank token collapse** and human-verified acoustic precision.
+Official repository for **Nemotron 0.6B Farsi 2-Bit**: an industrial-grade, extreme 2-bit quantized Speech-to-Text (ASR) model for the Persian language, compressed from **2,400 MB down to 198.96 MB** with **zero blank token collapse** and human-verified acoustic precision.
 
 ---
 
@@ -15,7 +15,7 @@ Official repository for **Phonon 2.5 Nemotron 0.6B Farsi**: an industrial-grade,
 
 1. **Sub-200MB Boundary Broken**:
    - Original FP16 model: **`2,400 MB`**
-   - Final Phonon 2.5 container: **`198.96 MB`** (**> 12x reduction**).
+   - Final 2-bit container: **`198.96 MB`** (**> 12x reduction**).
 2. **Golden Shield FP16 (Zero Blank Token Collapse)**:
    - The sensitive `joint.head`, `decoder`, and `encoder_projector` layers are strictly guarded in FP16 (< 18 MB footprint), mathematically guaranteeing **0.00% blank token (`1024`) collapse**.
 3. **Five-Value 2-Bit STE with Base-3 Bitplane Packing**:
@@ -31,9 +31,9 @@ Official repository for **Phonon 2.5 Nemotron 0.6B Farsi**: an industrial-grade,
 | Model Version | Weight Format | Disk Footprint | Encoder CosSim | Projector CosSim | Latency / RTF | Blank Collapse |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
 | **Teacher Baseline (FP16)** | Standard PyTorch FP16 | 2,400 MB | 1.0000 | 1.0000 | 1.0x (Baseline) | 0.00% |
-| **Step 1000 QAT** | Phonon 2.5 (Group 64) | 233.10 MB | 0.9151 | - | > 15x Real-Time | 0.00% |
-| **Step 2500 QAT** | Phonon 2.5 (Group 128) | 198.98 MB | 0.9474 | - | > 15x Real-Time | 0.00% |
-| **🏆 Final Step 5000** | **Phonon 2.5 Dual-Distilled** | **198.96 MB** | **0.9449** | **0.9662** | **> 15x Real-Time** | **0.00%** |
+| **Step 1000 QAT** | 2-Bit (Group 64) | 233.10 MB | 0.9151 | - | > 15x Real-Time | 0.00% |
+| **Step 2500 QAT** | 2-Bit (Group 128) | 198.98 MB | 0.9474 | - | > 15x Real-Time | 0.00% |
+| **🏆 Final Step 5000** | **2-Bit Dual-Distilled** | **198.96 MB** | **0.9449** | **0.9662** | **> 15x Real-Time** | **0.00%** |
 
 ---
 
@@ -55,7 +55,7 @@ In real-world speech datasets, typists often transcribe colloquial speech into f
 
 ```mermaid
 flowchart TD
-    A["Phonon 2.5 Container (198.96 MB)"] --> B["Conformer Encoder: 2-Bit Five-Value (267 modules)"]
+    A["2-Bit Container (198.96 MB)"] --> B["Conformer Encoder: 2-Bit Five-Value (267 modules)"]
     A --> C["Input Convolutions & Tables: INT6 Row-Scaled (77 layers)"]
     A --> D["Golden Shield FP16 (311 layers)"]
 
@@ -87,11 +87,11 @@ pip install -r requirements.txt
 The engine automatically fetches the 198.96 MB binary container from Hugging Face:
 
 ```python
-from engine import load_phonon_model
+from engine import load_model
 import torchaudio
 
 # 1. Load model and processor (RAM footprint < 400 MB)
-model, processor = load_phonon_model()
+model, processor = load_model()
 
 # 2. Transcribe any Persian audio file
 waveform, sr = torchaudio.load("sample.wav")
@@ -124,7 +124,7 @@ python train_qat.py
 - Base model: [`mehdi-hf/nemotron-asr-streaming-farsi`](https://huggingface.co/mehdi-hf/nemotron-asr-streaming-farsi) by Mehdi.
 - Base architecture: NVIDIA NeMo FastConformer RNN-T 0.6B.
 - Training dataset: [`MahtaFetrat/Mana-TTS`](https://huggingface.co/datasets/MahtaFetrat/Mana-TTS).
-- Quantization & Compression: **Phonon 2.5 Architecture** by [Ramin Mahmoodi](https://github.com/ramin-mahmoodi).
+- Quantization & Compression: **2-Bit QAT Architecture** by [Ramin Mahmoodi](https://github.com/ramin-mahmoodi).
 
 ---
 

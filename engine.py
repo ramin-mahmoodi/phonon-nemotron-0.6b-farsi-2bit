@@ -1,6 +1,6 @@
 """
-Phonon 2.5 Runtime Engine
-Extreme 2-bit quantization and real-time streaming inference for FastConformer RNN-T
+Nemotron 0.6B Farsi 2-Bit Runtime Engine
+Extreme 2-bit quantization and speech-to-text inference for FastConformer RNN-T
 Author: Ramin Mahmoodi (https://github.com/ramin-mahmoodi)
 License: Apache-2.0
 """
@@ -61,13 +61,13 @@ def unpack_int6_row(blob: bytes, shape: list) -> np.ndarray:
     return (q.reshape(o, ncol).astype(np.float32) * scales.astype(np.float32)[:, None]).reshape(shape).astype(np.float16)
 
 
-def load_phonon_model(
+def load_model(
     container_path: str = None,
     repo_id: str = "ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit",
     device: str = None,
 ):
     """
-    Loads and decompresses the Phonon 2.5 container into an active PyTorch RNN-T model.
+    Loads and decompresses the 2-bit container into an active PyTorch RNN-T model.
     If container_path is None or does not exist, automatically downloads from Hugging Face Hub.
     """
     if device is None:
@@ -81,7 +81,7 @@ def load_phonon_model(
             filename="nemotron_farsi_phonon2.5_step5000_sub200mb.bps.tar.zst",
         )
 
-    print(f"🔓 Decompressing Phonon 2.5 container from: {container_path}")
+    print(f"🔓 Decompressing 2-bit container from: {container_path}")
     dctx = zstd.ZstdDecompressor()
     with open(container_path, "rb") as f_in:
         with dctx.stream_reader(f_in) as reader:
@@ -115,5 +115,9 @@ def load_phonon_model(
 
     model.load_state_dict(model_dict)
     model.eval()
-    print("✅ Model successfully initialized and ready for streaming inference!")
+    print("✅ Model successfully initialized and ready for inference!")
     return model, processor
+
+
+# Alias for compatibility
+load_phonon_model = load_model
