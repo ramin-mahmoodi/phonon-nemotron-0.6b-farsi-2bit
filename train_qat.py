@@ -1,5 +1,5 @@
 """
-Nemotron 0.6B Farsi 2-Bit Industrial QAT Training Script
+Phonon Nemotron 0.6B Farsi 2-Bit Industrial QAT Training Script
 Continuous Straight-Through Estimator (STE) with Dual Distillation and SpecAugment
 Author: Ramin Mahmoodi (https://github.com/ramin-mahmoodi)
 License: Apache-2.0
@@ -85,7 +85,7 @@ def apply_spec_augment(features, freq_mask_param=12, time_mask_param=25, num_fre
             for _ in range(num_freq_masks):
                 f_len = torch.randint(0, min(freq_mask_param, F_dim), (1,), device=features.device).item()
                 f0 = torch.randint(0, max(1, F_dim - f_len), (1,), device=features.device).item()
-                augmented[:, f0:f0+f_len, :] = 0.0
+                augmented[:, f0:f0+f_len] = 0.0
             for _ in range(num_time_masks):
                 t_len = torch.randint(0, min(time_mask_param, T_dim), (1,), device=features.device).item()
                 t0 = torch.randint(0, max(1, T_dim - t_len), (1,), device=features.device).item()
@@ -104,4 +104,4 @@ def apply_spec_augment(features, freq_mask_param=12, time_mask_param=25, num_fre
 
 
 if __name__ == "__main__":
-    print("🚀 Training Engine: Dual Distillation + 2-bit STE + SpecAugment")
+    print("Training Engine: Dual Distillation + 2-bit STE + SpecAugment")

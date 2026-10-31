@@ -1,21 +1,21 @@
-# 🚀 Nemotron 0.6B Farsi 2-Bit (Sub-200MB Speech-to-Text)
+# Phonon Nemotron 0.6B Farsi 2-Bit (Sub-200MB Speech-to-Text)
 
-[![Hugging Face Model](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Model%20Card-yellow)](https://huggingface.co/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit)
+[![Hugging Face Model](https://img.shields.io/badge/Hugging%20Face-Model%20Card-yellow)](https://huggingface.co/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0%2B-ee4c2c.svg)](https://pytorch.org/)
 [![Model Size](https://img.shields.io/badge/Model%20Size-198.96%20MB-brightgreen.svg)](https://huggingface.co/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit)
 [![Compression](https://img.shields.io/badge/Compression->12x%20Reduction-orange.svg)]()
 [![Language](https://img.shields.io/badge/Language-Persian%20%28Farsi%29-blue.svg)]()
 
-Official repository for **Nemotron 0.6B Farsi 2-Bit**: an industrial-grade, extreme 2-bit quantized Speech-to-Text (ASR) model for the Persian language, compressed from **2,400 MB down to 198.96 MB** with **zero blank token collapse** and human-verified acoustic precision.
+Official repository for **Phonon Nemotron 0.6B Farsi 2-Bit**: an industrial-grade, extreme 2-bit quantized Speech-to-Text (ASR) model for the Persian language, compressed from **2,400 MB down to 198.96 MB** with **zero blank token collapse** and human-verified acoustic precision.
 
 ---
 
-## 🌟 Key Innovations
+## Key Innovations
 
 1. **Sub-200MB Boundary Broken**:
    - Original FP16 model: **`2,400 MB`**
-   - Final 2-bit container: **`198.96 MB`** (**> 12x reduction**).
+   - Final Phonon container: **`198.96 MB`** (**> 12x reduction**).
 2. **Golden Shield FP16 (Zero Blank Token Collapse)**:
    - The sensitive `joint.head`, `decoder`, and `encoder_projector` layers are strictly guarded in FP16 (< 18 MB footprint), mathematically guaranteeing **0.00% blank token (`1024`) collapse**.
 3. **Five-Value 2-Bit STE with Base-3 Bitplane Packing**:
@@ -26,36 +26,36 @@ Official repository for **Nemotron 0.6B Farsi 2-Bit**: an industrial-grade, extr
 
 ---
 
-## 📊 Comprehensive Benchmark
+## Benchmark
 
 | Model Version | Weight Format | Disk Footprint | Encoder CosSim | Projector CosSim | Latency / RTF | Blank Collapse |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
 | **Teacher Baseline (FP16)** | Standard PyTorch FP16 | 2,400 MB | 1.0000 | 1.0000 | 1.0x (Baseline) | 0.00% |
-| **Step 1000 QAT** | 2-Bit (Group 64) | 233.10 MB | 0.9151 | - | > 15x Real-Time | 0.00% |
-| **Step 2500 QAT** | 2-Bit (Group 128) | 198.98 MB | 0.9474 | - | > 15x Real-Time | 0.00% |
-| **🏆 Final Step 5000** | **2-Bit Dual-Distilled** | **198.96 MB** | **0.9449** | **0.9662** | **> 15x Real-Time** | **0.00%** |
+| **Step 1000 QAT** | Phonon (Group 64) | 233.10 MB | 0.9151 | - | > 15x Real-Time | 0.00% |
+| **Step 2500 QAT** | Phonon (Group 128) | 198.98 MB | 0.9474 | - | > 15x Real-Time | 0.00% |
+| **Step 5000 (Final)** | **Phonon Dual-Distilled** | **198.96 MB** | **0.9449** | **0.9662** | **> 15x Real-Time** | **0.00%** |
 
 ---
 
-## 🎧 Auditory-Verified Persian Benchmark Samples
+## Persian Benchmark Samples
 
 In real-world speech datasets, typists often transcribe colloquial speech into formal written Persian (e.g. converting spoken *"تلاش‌مون"* into formal *"تلاش‌مان"*). Human auditory verification confirmed that **the 2-bit student model transcribes the true acoustic phonemes with 100% precision**:
 
 | Sample | Audio File | Ground Truth (Dataset) | Student Prediction (2-Bit) | Human Auditory Verification |
 | :---: | :---: | :--- | :--- | :---: |
-| **01** | [![Download sample_1.wav](https://img.shields.io/badge/Download-sample__1.wav-2563eb?style=for-the-badge&logo=soundcharts&logoColor=white)](https://raw.githubusercontent.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/main/examples/sample_1.wav) | تلاش کردند که با رایانه خود ارتباط برقرار کنند | **تلاش کردن که با رایانه خود ارتباط برقرار کند** | ✅ 100% Acoustic Match<br>*(Speaker used colloquial "کردن / کند")* |
-| **02** | [![Download sample_2.wav](https://img.shields.io/badge/Download-sample__2.wav-2563eb?style=for-the-badge&logo=soundcharts&logoColor=white)](https://raw.githubusercontent.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/main/examples/sample_2.wav) | که تلاش مان مثل بازی تیم ملی با انگلستان به نتیجه نرسید | **که تلاش مون مثل بازی تیم ملی با انگلستان به نتیجه نرسید** | ✅ 100% Acoustic Match<br>*(Speaker clearly pronounced /u/ "مون")* |
-| **03** | [![Download sample_3.wav](https://img.shields.io/badge/Download-sample__3.wav-2563eb?style=for-the-badge&logo=soundcharts&logoColor=white)](https://raw.githubusercontent.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/main/examples/sample_3.wav) | و روی عکس زوم کند تا کاربر بتواند جزئیات بیشتری از آن را مشاهده کند | **و روی عکس زوم کند تا کاربر بتواند جزئیات بیشتری از آن را مشاهده کند** | ✅ 100% Word-for-Word |
-| **04** | [![Download sample_4.wav](https://img.shields.io/badge/Download-sample__4.wav-2563eb?style=for-the-badge&logo=soundcharts&logoColor=white)](https://raw.githubusercontent.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/main/examples/sample_4.wav) | و کاربر نابینا می تواند صفحه کاغذ را در مقابل دوربینش قرار دهد | **و کاربر نابینا می تواند صفحه کاغذ را در مقابل دوربینش قرار دهد** | ✅ 100% Word-for-Word |
-| **05** | [![Download sample_5.wav](https://img.shields.io/badge/Download-sample__5.wav-2563eb?style=for-the-badge&logo=soundcharts&logoColor=white)](https://raw.githubusercontent.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/main/examples/sample_5.wav) | و دخترش هم با یک فیلم خود را سرگرم کرده است | **و دخترش هم با یک فیلم خود را سرگرم کرده است** | ✅ 100% Word-for-Word |
+| **01** | [![Download sample_1.wav](https://img.shields.io/badge/Download-sample__1.wav-2563eb?style=for-the-badge)](https://raw.githubusercontent.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/main/examples/sample_1.wav) | تلاش کردند که با رایانه خود ارتباط برقرار کنند | **تلاش کردن که با رایانه خود ارتباط برقرار کند** | 100% Acoustic Match<br>*(Speaker used colloquial "کردن / کند")* |
+| **02** | [![Download sample_2.wav](https://img.shields.io/badge/Download-sample__2.wav-2563eb?style=for-the-badge)](https://raw.githubusercontent.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/main/examples/sample_2.wav) | که تلاش مان مثل بازی تیم ملی با انگلستان به نتیجه نرسید | **که تلاش مون مثل بازی تیم ملی با انگلستان به نتیجه نرسید** | 100% Acoustic Match<br>*(Speaker clearly pronounced /u/ "مون")* |
+| **03** | [![Download sample_3.wav](https://img.shields.io/badge/Download-sample__3.wav-2563eb?style=for-the-badge)](https://raw.githubusercontent.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/main/examples/sample_3.wav) | و روی عکس زوم کند تا کاربر بتواند جزئیات بیشتری از آن را مشاهده کند | **و روی عکس زوم کند تا کاربر بتواند جزئیات بیشتری از آن را مشاهده کند** | 100% Word-for-Word |
+| **04** | [![Download sample_4.wav](https://img.shields.io/badge/Download-sample__4.wav-2563eb?style=for-the-badge)](https://raw.githubusercontent.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/main/examples/sample_4.wav) | و کاربر نابینا می تواند صفحه کاغذ را در مقابل دوربینش قرار دهد | **و کاربر نابینا می تواند صفحه کاغذ را در مقابل دوربینش قرار دهد** | 100% Word-for-Word |
+| **05** | [![Download sample_5.wav](https://img.shields.io/badge/Download-sample__5.wav-2563eb?style=for-the-badge)](https://raw.githubusercontent.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/main/examples/sample_5.wav) | و دخترش هم با یک فیلم خود را سرگرم کرده است | **و دخترش هم با یک فیلم خود را سرگرم کرده است** | 100% Word-for-Word |
 
 ---
 
-## 🏗️ Architecture Breakdown
+## Architecture Breakdown
 
 ```mermaid
 flowchart TD
-    A["2-Bit Container (198.96 MB)"] --> B["Conformer Encoder: 2-Bit Five-Value (267 modules)"]
+    A["Phonon Container (198.96 MB)"] --> B["Conformer Encoder: 2-Bit Five-Value (267 modules)"]
     A --> C["Input Convolutions & Tables: INT6 Row-Scaled (77 layers)"]
     A --> D["Golden Shield FP16 (311 layers)"]
 
@@ -72,7 +72,7 @@ flowchart TD
 
 ---
 
-## 🚀 Quickstart
+## Quickstart
 
 ### 1. Installation
 
@@ -87,11 +87,11 @@ pip install -r requirements.txt
 The engine automatically fetches the 198.96 MB binary container from Hugging Face:
 
 ```python
-from engine import load_model
+from engine import load_phonon_model
 import torchaudio
 
 # 1. Load model and processor (RAM footprint < 400 MB)
-model, processor = load_model()
+model, processor = load_phonon_model()
 
 # 2. Transcribe any Persian audio file
 waveform, sr = torchaudio.load("sample.wav")
@@ -110,7 +110,7 @@ python infer.py --audio examples/sample_1.wav --device cuda:0
 
 ---
 
-## 🔬 Training & Reproduction
+## Training and Reproduction
 
 To reproduce the industrial QAT training:
 ```bash
@@ -119,15 +119,15 @@ python train_qat.py
 
 ---
 
-## 🙏 Acknowledgments & Credits
+## Acknowledgments and Credits
 
 - Base model: [`mehdi-hf/nemotron-asr-streaming-farsi`](https://huggingface.co/mehdi-hf/nemotron-asr-streaming-farsi) by Mehdi.
 - Base architecture: NVIDIA NeMo FastConformer RNN-T 0.6B.
 - Training dataset: [`MahtaFetrat/Mana-TTS`](https://huggingface.co/datasets/MahtaFetrat/Mana-TTS).
-- Quantization & Compression: **2-Bit QAT Architecture** by [Ramin Mahmoodi](https://github.com/ramin-mahmoodi).
+- Quantization & Compression: **Phonon Architecture** by [Ramin Mahmoodi](https://github.com/ramin-mahmoodi).
 
 ---
 
-## 📜 License
+## License
 
 This project is licensed under the **Apache-2.0 License** - see the [LICENSE](LICENSE) file for details.

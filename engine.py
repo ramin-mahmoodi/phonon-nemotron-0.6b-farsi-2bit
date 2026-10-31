@@ -1,5 +1,5 @@
 """
-Nemotron 0.6B Farsi 2-Bit Runtime Engine
+Phonon Nemotron 0.6B Farsi 2-Bit Runtime Engine
 Extreme 2-bit quantization and speech-to-text inference for FastConformer RNN-T
 Author: Ramin Mahmoodi (https://github.com/ramin-mahmoodi)
 License: Apache-2.0
@@ -61,13 +61,13 @@ def unpack_int6_row(blob: bytes, shape: list) -> np.ndarray:
     return (q.reshape(o, ncol).astype(np.float32) * scales.astype(np.float32)[:, None]).reshape(shape).astype(np.float16)
 
 
-def load_model(
+def load_phonon_model(
     container_path: str = None,
     repo_id: str = "ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit",
     device: str = None,
 ):
     """
-    Loads and decompresses the 2-bit container into an active PyTorch RNN-T model.
+    Loads and decompresses the Phonon container into an active PyTorch RNN-T model.
     If container_path is None or does not exist, automatically downloads from Hugging Face Hub.
     """
     if device is None:
@@ -75,13 +75,13 @@ def load_model(
 
     if container_path is None or not os.path.exists(container_path):
         from huggingface_hub import hf_hub_download
-        print(f"📥 Downloading container from Hugging Face Hub ({repo_id})...")
+        print(f"Downloading container from Hugging Face Hub ({repo_id})...")
         container_path = hf_hub_download(
             repo_id=repo_id,
             filename="nemotron_farsi_phonon2.5_step5000_sub200mb.bps.tar.zst",
         )
 
-    print(f"🔓 Decompressing 2-bit container from: {container_path}")
+    print(f"Decompressing Phonon container from: {container_path}")
     dctx = zstd.ZstdDecompressor()
     with open(container_path, "rb") as f_in:
         with dctx.stream_reader(f_in) as reader:
@@ -92,14 +92,14 @@ def load_model(
     data_store = decompressed_bytes[8 + m_len :]
 
     base_model_id = "mehdi-hf/nemotron-asr-streaming-farsi"
-    print(f"🚀 Initializing base architecture from: {base_model_id}")
+    print(f"Initializing base architecture from: {base_model_id}")
     processor = AutoProcessor.from_pretrained(base_model_id)
     processor.set_num_lookahead_tokens(13)
 
     model = AutoModelForRNNT.from_pretrained(base_model_id, torch_dtype=torch.float16).to(device)
     model_dict = model.state_dict()
 
-    print(f"⚡ Injecting {len(manifest['records'])} quantized & protected layers into model...")
+    print(f"Injecting {len(manifest['records'])} quantized and protected layers into model...")
     for rec in manifest["records"]:
         name = rec["name"]
         blob = data_store[rec["offset"] : rec["offset"] + rec["length"]]
@@ -115,9 +115,9 @@ def load_model(
 
     model.load_state_dict(model_dict)
     model.eval()
-    print("✅ Model successfully initialized and ready for inference!")
+    print("Model successfully initialized and ready for inference.")
     return model, processor
 
 
 # Alias for compatibility
-load_phonon_model = load_model
+load_model = load_phonon_model
