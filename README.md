@@ -41,37 +41,13 @@ Official repository for **Phonon 2.5 Nemotron 0.6B Farsi**: an industrial-grade,
 
 In real-world speech datasets, typists often transcribe colloquial speech into formal written Persian (e.g. converting spoken *"تلاش‌مون"* into formal *"تلاش‌مان"*). Human auditory verification confirmed that **the 2-bit student model transcribes the true acoustic phonemes with 100% precision**:
 
-### Sample 1:
-<audio controls src="https://github.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/raw/main/examples/sample_1.wav"></audio>
-
-- **Ground Truth**: تلاش کردند که با رایانه خود ارتباط برقرار کنند
-- **Actual Audio**: «تلاش کردن که با رایانه خود ارتباط برقرار کند» (Colloquial verb endings)
-- **Student Pred**: **تلاش کردن که با رایانه خود ارتباط برقرار کند** (✅ 100% Acoustic Match)
-
-### Sample 2:
-<audio controls src="https://github.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/raw/main/examples/sample_2.wav"></audio>
-
-- **Ground Truth**: که تلاش مان مثل بازی تیم ملی با انگلستان به نتیجه نرسید
-- **Actual Audio**: «که تلاش مون مثل بازی تیم ملی با انگلستان به نتیجه نرسید» (Pronounced /u/ vowel)
-- **Student Pred**: **که تلاش مون مثل بازی تیم ملی با انگلستان به نتیجه نرسید** (✅ 100% Acoustic Match)
-
-### Sample 3:
-<audio controls src="https://github.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/raw/main/examples/sample_3.wav"></audio>
-
-- **Ground Truth**: و روی عکس زوم کند تا کاربر بتواند جزئیات بیشتری از آن را مشاهده کند
-- **Student Pred**: **و روی عکس زوم کند تا کاربر بتواند جزئیات بیشتری از آن را مشاهده کند** (✅ 100% Word-for-Word)
-
-### Sample 4:
-<audio controls src="https://github.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/raw/main/examples/sample_4.wav"></audio>
-
-- **Ground Truth**: و کاربر نابینا می تواند صفحه کاغذ را در مقابل دوربینش قرار دهد
-- **Student Pred**: **و کاربر نابینا می تواند صفحه کاغذ را در مقابل دوربینش قرار دهد** (✅ 100% Word-for-Word)
-
-### Sample 5:
-<audio controls src="https://github.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/raw/main/examples/sample_5.wav"></audio>
-
-- **Ground Truth**: و دخترش هم با یک فیلم خود را سرگرم کرده است
-- **Student Pred**: **و دخترش هم با یک فیلم خود را سرگرم کرده است** (✅ 100% Word-for-Word)
+| Sample | Listen Online | Ground Truth (Dataset) | Student Prediction (2-Bit) | Human Auditory Verification |
+| :---: | :---: | :--- | :--- | :---: |
+| **01** | [![Play Audio](https://img.shields.io/badge/▶️%20Play-Audio%2001-2563eb?style=for-the-badge)](https://raw.githubusercontent.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/main/examples/sample_1.wav) | تلاش کردند که با رایانه خود ارتباط برقرار کنند | **تلاش کردن که با رایانه خود ارتباط برقرار کند** | ✅ 100% Acoustic Match<br>*(Speaker used colloquial "کردن / کند")* |
+| **02** | [![Play Audio](https://img.shields.io/badge/▶️%20Play-Audio%2002-2563eb?style=for-the-badge)](https://raw.githubusercontent.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/main/examples/sample_2.wav) | که تلاش مان مثل بازی تیم ملی با انگلستان به نتیجه نرسید | **که تلاش مون مثل بازی تیم ملی با انگلستان به نتیجه نرسید** | ✅ 100% Acoustic Match<br>*(Speaker clearly pronounced /u/ "مون")* |
+| **03** | [![Play Audio](https://img.shields.io/badge/▶️%20Play-Audio%2003-2563eb?style=for-the-badge)](https://raw.githubusercontent.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/main/examples/sample_3.wav) | و روی عکس زوم کند تا کاربر بتواند جزئیات بیشتری از آن را مشاهده کند | **و روی عکس زوم کند تا کاربر بتواند جزئیات بیشتری از آن را مشاهده کند** | ✅ 100% Word-for-Word |
+| **04** | [![Play Audio](https://img.shields.io/badge/▶️%20Play-Audio%2004-2563eb?style=for-the-badge)](https://raw.githubusercontent.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/main/examples/sample_4.wav) | و کاربر نابینا می تواند صفحه کاغذ را در مقابل دوربینش قرار دهد | **و کاربر نابینا می تواند صفحه کاغذ را در مقابل دوربینش قرار دهد** | ✅ 100% Word-for-Word |
+| **05** | [![Play Audio](https://img.shields.io/badge/▶️%20Play-Audio%2005-2563eb?style=for-the-badge)](https://raw.githubusercontent.com/ramin-mahmoodi/phonon-nemotron-0.6b-farsi-2bit/main/examples/sample_5.wav) | و دخترش هم با یک فیلم خود را سرگرم کرده است | **و دخترش هم با یک فیلم خود را سرگرم کرده است** | ✅ 100% Word-for-Word |
 
 ---
 
